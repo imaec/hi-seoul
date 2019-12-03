@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigationHome"
+        android:title="HOME"
+        android:icon="@mipmap/ic_launcher"/>
+
+    <item
+        android:id="@+id/navigationMap"
+        android:title="MAP"
+        android:icon="@mipmap/ic_launcher"/>
+
+    <item
+        android:id="@+id/navigationMy"
+        android:title="MY"
+        android:icon="@mipmap/ic_launcher"/>
+
+    <item
+        android:id="@+id/navigationSetting"
+        android:title="SETTING"
+        android:icon="@mipmap/ic_launcher"/>
+</menu>
