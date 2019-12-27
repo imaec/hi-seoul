@@ -35,6 +35,7 @@ class HomeViewModel(context: Context) : BaseViewModel(context) {
         viewPagerAdapter = ViewPagerAdapter()
 
         loadImage()
+
         
     }
 
