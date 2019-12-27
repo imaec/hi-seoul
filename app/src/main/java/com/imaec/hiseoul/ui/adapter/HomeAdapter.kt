@@ -1,21 +1,27 @@
 package com.imaec.hiseoul.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.imaec.hiseoul.R
+import com.imaec.hiseoul.activity.DetailActivity
 import com.imaec.hiseoul.model.Item
 import kotlinx.android.synthetic.main.item_home.view.*
 import java.text.NumberFormat
 
 class HomeAdapter(var glide: RequestManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private lateinit var context: Context
+
     private val listItem = ArrayList<Item>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        this.context = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false)
         return ItemViewHolder(view)
     }
@@ -49,6 +55,13 @@ class HomeAdapter(var glide: RequestManager) : RecyclerView.Adapter<RecyclerView
             }
             textViewCount.text = NumberFormat.getInstance().format(item.readcount) + " view"
 
+            itemView.setOnClickListener {
+                context.startActivity(Intent(context, DetailActivity::class.java).apply {
+                    putExtra("title", item.title)
+                    putExtra("contentId", item.contentid)
+                    putExtra("contentTypeId", item.contenttypeid)
+                })
+            }
         }
     }
 

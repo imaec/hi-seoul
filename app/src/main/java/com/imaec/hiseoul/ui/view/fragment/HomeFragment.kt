@@ -3,7 +3,6 @@ package com.imaec.hiseoul.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,23 +11,17 @@ import android.view.ViewGroup
 import android.view.WindowManager.LayoutParams.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.imaec.hiseoul.CategoryClickCallback
-import com.imaec.hiseoul.HomeItemDecoration
-import com.imaec.hiseoul.ParallaxPageTransformer
-import com.imaec.hiseoul.ParallaxPageTransformer.ParallaxTransformInformation.Companion.PARALLAX_EFFECT_DEFAULT
-import com.imaec.hiseoul.R
+import com.imaec.hiseoul.*
 import com.imaec.hiseoul.adapter.CategoryAdapter
 import com.imaec.hiseoul.adapter.FragmentAdapter
 import com.imaec.hiseoul.adapter.HomeAdapter
-import com.imaec.hiseoul.model.AreaData
+import com.imaec.hiseoul.model.TourData
 import com.imaec.hiseoul.model.CategoryData
 import com.imaec.hiseoul.model.Item
 import com.imaec.hiseoul.retrofit.HiSeoulService
@@ -63,10 +56,11 @@ class HomeFragment : Fragment() {
 
             categoryIndex = position
             adapter.clearItem()
-            listAll[position].forEach {
-                adapter.addItem(it)
-            }
-            adapter.notifyDataSetChanged()
+            getList(filterIndex, false)
+//            listAll[position].forEach {
+//                adapter.addItem(it)
+//            }
+//            adapter.notifyDataSetChanged()
             textHomeCategory.text = listCategory[position].category
         }
     }
@@ -98,7 +92,6 @@ class HomeFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 indicatorNew.selectDot(position)
             }
-
         })
 
         textHomeFilter.setOnClickListener {
@@ -182,7 +175,10 @@ class HomeFragment : Fragment() {
         compositeDisposable = CompositeDisposable()
 
         fragmentAdapter = FragmentAdapter(childFragmentManager)
+        pageTransformer = ParallaxPageTransformer()
+            .addViewToParallax(ParallaxPageTransformer.ParallaxTransformInformation(R.id.imageView, 2f, 2f))
         viewPagerHome.adapter = fragmentAdapter
+        viewPagerHome.setPageTransformer(true, pageTransformer)
 
         categoryAdapter = CategoryAdapter(Glide.with(this), clickCallback)
         categoryLayoutManger = LinearLayoutManager(context).apply {
@@ -202,10 +198,6 @@ class HomeFragment : Fragment() {
 
         bottomSheetBehavior = BottomSheetBehavior.from(linearBottomSheetHome)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-
-        pageTransformer = ParallaxPageTransformer()
-                .addViewToParallax(ParallaxPageTransformer.ParallaxTransformInformation(R.id.imageNew, 2f, 2f))
-        viewPagerHome.setPageTransformer(true, pageTransformer)
 
         (context as AppCompatActivity).window.setFlags(FLAG_LAYOUT_NO_LIMITS, FLAG_LAYOUT_NO_LIMITS)
     }
@@ -234,29 +226,32 @@ class HomeFragment : Fragment() {
     private fun getList(filterIndex: Int, isInit: Boolean) {
         val listFilter = arrayOf("P", "R", "O")
         val service = HiSeoulService.instance
-        val listObservable = ArrayList<Observable<AreaData>>()
-        listCategory.forEach {
-            listObservable.add(service.callGetList(it.contenttypeid, listFilter[filterIndex], 60, 1))
-        }
-        listAll.forEach {
-            it.clear()
-        }
-        Observable
-            .merge(listObservable)
+//        val listObservable = ArrayList<Observable<TourData>>()
+//        listCategory.forEach {
+//            listObservable.add(service.callGetList(it.contenttypeid, listFilter[filterIndex], 60, 1))
+//        }
+//        listAll.forEach {
+//            it.clear()
+//        }
+        val callGetList = service.callGetList(listCategory[categoryIndex].contenttypeid, listFilter[filterIndex], 60, 1)
+        callGetList
+//        Observable
+//            .merge(listObservable)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMapIterable {
                 it.body.items.listItem
             }
             .subscribe({
-                for ((i, category) in listCategory.withIndex()) {
-                    if (it.contenttypeid == category.contenttypeid) {
-                        listAll[i].add(it)
-                    }
-                }
-                if (it.contenttypeid == listCategory[categoryIndex].contenttypeid) adapter.addItem(it)
+//                for ((i, category) in listCategory.withIndex()) {
+//                    if (it.contenttypeid == category.contenttypeid) {
+//                        listAll[i].add(it)
+//                    }
+//                }
+//                if (it.contenttypeid == listCategory[categoryIndex].contenttypeid) adapter.addItem(it)
+                adapter.addItem(it)
             }, {
-                Log.d("it :::: ", it.message)
+                Log.d("it1 :::: ", it.message)
             }, {
                 adapter.notifyDataSetChanged()
 
@@ -269,7 +264,7 @@ class HomeFragment : Fragment() {
 
         if (!isInit) return
 
-        val listObservable2 = ArrayList<Observable<AreaData>>()
+        val listObservable2 = ArrayList<Observable<TourData>>()
         listCategory.forEach {
             listObservable2.add(service.callGetList(it.contenttypeid, "R", 1, 1))
         }
@@ -281,7 +276,7 @@ class HomeFragment : Fragment() {
                 it.body.items.listItem
             }
             .subscribe({
-                val fragment = NewFragment().apply {
+                val fragment = ImageFragment().apply {
                     arguments = Bundle().apply {
                         putString("img", it.firstimage)
                         putString("title", it.title)
@@ -289,7 +284,7 @@ class HomeFragment : Fragment() {
                 }
                 fragmentAdapter.addItem(fragment)
             }, {
-                Log.d("it :::: ", it.message)
+                Log.d("it2 :::: ", it.message)
             }, {
                 fragmentAdapter.notifyDataSetChanged()
                 setIndicator()

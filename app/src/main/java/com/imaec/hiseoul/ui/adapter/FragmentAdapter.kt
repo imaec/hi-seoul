@@ -15,4 +15,8 @@ class FragmentAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(f
     fun addItem(fragment: Fragment) {
         fragments.add(fragment)
     }
+
+    fun clearItem() {
+        fragments.clear()
+    }
 }
