@@ -28,6 +28,7 @@ class MainViewModel(context: Context) : BaseViewModel(context) {
         fragmentMap = MapFragment()
         fragmentMy = MyFragment()
         fragmentSetting = SettingFragment()
+        
     }
 
     fun initBottomNavigation(containerId: Int) {
