@@ -1,4 +1,4 @@
-package com.imaec.hiseoul.adapter
+package com.imaec.hiseoul.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View

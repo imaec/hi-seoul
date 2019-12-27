@@ -1,4 +1,4 @@
-package com.imaec.hiseoul.adapter
+package com.imaec.hiseoul.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.imaec.hiseoul.R
-import com.imaec.hiseoul.activity.DetailActivity
+import com.imaec.hiseoul.ui.view.activity.DetailActivity
 import com.imaec.hiseoul.model.Item
 import kotlinx.android.synthetic.main.item_home.view.*
 import java.text.NumberFormat

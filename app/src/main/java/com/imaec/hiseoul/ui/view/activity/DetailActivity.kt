@@ -1,4 +1,4 @@
-package com.imaec.hiseoul.activity
+package com.imaec.hiseoul.ui.view.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,11 +10,11 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.imaec.hiseoul.R
-import com.imaec.hiseoul.adapter.DetailAdapter
-import com.imaec.hiseoul.adapter.FragmentAdapter
-import com.imaec.hiseoul.fragment.DetailFragment
-import com.imaec.hiseoul.fragment.ImageFragment
-import com.imaec.hiseoul.fragment.IntroFragment
+import com.imaec.hiseoul.ui.adapter.DetailAdapter
+import com.imaec.hiseoul.ui.adapter.FragmentAdapter
+import com.imaec.hiseoul.ui.view.fragment.DetailFragment
+import com.imaec.hiseoul.ui.view.fragment.ImageFragment
+import com.imaec.hiseoul.ui.view.fragment.IntroFragment
 import com.imaec.hiseoul.retrofit.HiSeoulService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -82,7 +82,8 @@ class DetailActivity : AppCompatActivity() {
         contentId = intent.getIntExtra("contentId", 0)
         contentTypeId = intent.getIntExtra("contentTypeId", 0)
 
-        fragmentImageAdapter = FragmentAdapter(supportFragmentManager)
+        fragmentImageAdapter =
+            FragmentAdapter(supportFragmentManager)
         fragmentAdapter = FragmentAdapter(supportFragmentManager)
         viewPagerDetailImage.adapter = fragmentImageAdapter
         viewPagerDetail.adapter = fragmentAdapter

@@ -1,4 +1,4 @@
-package com.imaec.hiseoul.fragment
+package com.imaec.hiseoul.ui.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle

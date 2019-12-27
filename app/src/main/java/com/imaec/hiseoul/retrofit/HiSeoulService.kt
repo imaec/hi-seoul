@@ -1,6 +1,7 @@
 package com.imaec.hiseoul.retrofit
 
-import com.imaec.hiseoul.model.AreaData
+import com.imaec.hiseoul.model.IntroData
+import com.imaec.hiseoul.model.TourData
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,6 +18,7 @@ interface HiSeoulService {
 
     companion object {
         const val SERVICE_URL = "http://api.visitkorea.or.kr/"
+        const val SERVICE_KEY = "tSjNUwbzL1FGAL7B8CoZrSCuwzWZ7GO1ton76vaKADWKkcurIK8ZuydB0BWckJ17wLNPYEtC3BTzw2A4%2Bxq1pQ%3D%3D"
         private val client = OkHttpClient.Builder().apply {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             addInterceptor(httpLoggingInterceptor.apply {
@@ -41,9 +43,26 @@ interface HiSeoulService {
                     @Query("arrange") arrange: String,
                     @Query("numOfRows") numOfRows: Int = 100,
                     @Query("pageNo") pageNo: Int = 1,
-                    @Query("ServiceKey") ServiceKey: String = URLDecoder.decode("ltGo7k1Pwd%2ByDXKFfLY50ON1sAt6T4cKTYakVnqS960Los5TDyLpyWpo2UFGjulmBs9jspaMvwazKJLEttVfsQ%3D%3D", "UTF-8"),
+                    @Query("ServiceKey") ServiceKey: String = URLDecoder.decode(SERVICE_KEY, "UTF-8"),
                     @Query("areaCode") areaCode: String = "1",
                     @Query("listYN") listYN: String = "Y",
                     @Query("MobileOS") MobileOS: String = "AND",
-                    @Query("MobileApp") MobileApp: String = "HiSeoul"): Observable<AreaData>
+                    @Query("MobileApp") MobileApp: String = "HiSeoul"): Observable<TourData>
+
+    @GET("openapi/service/rest/KorService/detailImage")
+    fun callGetImage(@Query("contentId") contentId: Int,
+                     @Query("contentTypeId") contentTypeId: Int,
+                     @Query("imageYN") imageYN: String = "Y",
+                     @Query("ServiceKey") ServiceKey: String = URLDecoder.decode(SERVICE_KEY, "UTF-8"),
+                     @Query("MobileOS") MobileOS: String = "AND",
+                     @Query("MobileApp") MobileApp: String = "HiSeoul"): Observable<TourData>
+
+    @GET("openapi/service/rest/KorService/detailCommon")
+    fun callGetIntro(@Query("contentId") contentId: Int,
+                     @Query("defaultYN") defaultYN: String = "Y",
+                     @Query("addrinfoYN") addrinfoYN: String = "Y",
+                     @Query("mapinfoYN") mapinfoYN: String = "Y",
+                     @Query("overviewYN") overviewYN: String = "Y",
+                     @Query("MobileOS") MobileOS: String = "AND",
+                     @Query("MobileApp") MobileApp: String = "HiSeoul"): Observable<IntroData>
 }

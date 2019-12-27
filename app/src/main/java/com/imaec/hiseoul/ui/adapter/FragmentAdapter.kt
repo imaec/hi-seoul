@@ -1,4 +1,4 @@
-package com.imaec.hiseoul.adapter
+package com.imaec.hiseoul.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

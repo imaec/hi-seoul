@@ -1,4 +1,4 @@
-package com.imaec.hiseoul.fragment
+package com.imaec.hiseoul.ui.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

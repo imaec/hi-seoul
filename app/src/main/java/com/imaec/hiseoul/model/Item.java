@@ -7,19 +7,19 @@ public class Item {
     private String addr1;
     @Element(required = false)
     private String addr2;
-    @Element
+    @Element(required = false)
     private int areacode;
-    @Element
+    @Element(required = false)
     private String cat1;
-    @Element
+    @Element(required = false)
     private String cat2;
-    @Element
+    @Element(required = false)
     private String cat3;
     @Element
     private int contentid;
-    @Element
+    @Element(required = false)
     private int contenttypeid;
-    @Element
+    @Element(required = false)
     private long createdtime;
     @Element(required = false)
     private String firstimage;
@@ -31,7 +31,7 @@ public class Item {
     private Double mapy;
     @Element(required = false)
     private int mlevel;
-    @Element
+    @Element(required = false)
     private long modifiedtime;
     @Element(required = false)
     private int readcount;
@@ -39,10 +39,18 @@ public class Item {
     private int sigungucode;
     @Element(required = false)
     private String tel;
-    @Element
+    @Element(required = false)
     private String title;
     @Element(required = false)
     private String zipcode;
+    @Element(required = false)
+    private String imagename;
+    @Element(required = false)
+    private String originimgurl;
+    @Element(required = false)
+    private String serialnum;
+    @Element(required = false)
+    private String smallimageurl;
 
     public String getAddr1() {
         return addr1;
@@ -202,5 +210,37 @@ public class Item {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public String getImagename() {
+        return imagename;
+    }
+
+    public void setImagename(String imagename) {
+        this.imagename = imagename;
+    }
+
+    public String getOriginimgurl() {
+        return originimgurl;
+    }
+
+    public void setOriginimgurl(String originimgurl) {
+        this.originimgurl = originimgurl;
+    }
+
+    public String getSerialnum() {
+        return serialnum;
+    }
+
+    public void setSerialnum(String serialnum) {
+        this.serialnum = serialnum;
+    }
+
+    public String getSmallimageurl() {
+        return smallimageurl;
+    }
+
+    public void setSmallimageurl(String smallimageurl) {
+        this.smallimageurl = smallimageurl;
     }
 }

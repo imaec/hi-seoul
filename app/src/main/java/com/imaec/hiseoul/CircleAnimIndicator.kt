@@ -83,13 +83,13 @@ class CircleAnimIndicator : LinearLayout {
 
         for (i in imageDot.indices) {
             if (i == position) {
-                imageDot!![i].setImageResource(mSelectCircle)
-                selectScaleAnim(imageDot!![i], 1f, 1.5f)
+                imageDot[i].setImageResource(mSelectCircle)
+                selectScaleAnim(imageDot[i], 1f, 1.5f)
             } else {
 
-                if (imageDot!![i].getTag(imageDot!![i].id) as Boolean) {
-                    imageDot!![i].setImageResource(mDefaultCircle)
-                    defaultScaleAnim(imageDot!![i], 1.5f, 1f)
+                if (imageDot[i].getTag(imageDot[i].id) as Boolean) {
+                    imageDot[i].setImageResource(mDefaultCircle)
+                    defaultScaleAnim(imageDot[i], 1.5f, 1f)
                 }
             }
         }

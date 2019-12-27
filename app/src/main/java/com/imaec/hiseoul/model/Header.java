@@ -4,9 +4,11 @@ import org.simpleframework.xml.Element;
 
 public class Header {
     @Element
-    int resultCode;
+    private int resultCode;
     @Element
-    String resultMsg;
+    private String resultMsg;
+    @Element(required = false)
+    private String responseTime;
 
     public int getResultCode() {
         return resultCode;
@@ -22,5 +24,13 @@ public class Header {
 
     public void setResultMsg(String resultMsg) {
         this.resultMsg = resultMsg;
+    }
+
+    public String getResponseTime() {
+        return responseTime;
+    }
+
+    public void setResponseTime(String responseTime) {
+        this.responseTime = responseTime;
     }
 }

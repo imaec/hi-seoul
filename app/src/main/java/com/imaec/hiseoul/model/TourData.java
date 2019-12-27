@@ -4,7 +4,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "response")
-public class AreaData {
+public class TourData {
 
     @Element(name = "header")
     private Header header;
