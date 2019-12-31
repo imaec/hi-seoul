@@ -3,25 +3,24 @@ package com.imaec.hiseoul.ui.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.imaec.hiseoul.R
+import com.imaec.hiseoul.databinding.ItemHomeBinding
 import com.imaec.hiseoul.ui.view.activity.DetailActivity
 import com.imaec.hiseoul.model.Item
 import kotlinx.android.synthetic.main.item_home.view.*
 import java.text.NumberFormat
 
-class HomeAdapter(var glide: RequestManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private lateinit var context: Context
+class HomeAdapter : BaseAdapter() {
 
     private val listItem = ArrayList<Item>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        this.context = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false)
         return ItemViewHolder(view)
     }
@@ -36,31 +35,38 @@ class HomeAdapter(var glide: RequestManager) : RecyclerView.Adapter<RecyclerView
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val imageThumb by lazy { itemView.imageItemHome }
-        private val textTitle by lazy { itemView.textItemHomeTitle }
-        private val textAddress by lazy { itemView.textItemHomeAddress }
-        private val textViewCount by lazy { itemView.textItemHomeViewCount }
+        private val binding = getBinding<ItemHomeBinding>(itemView)
 
         @SuppressLint("SetTextI18n")
         fun onBind(item: Item) {
-            glide
-                .load(item.firstimage)
-                .override(240, 200)
-                .into(imageThumb)
-            textTitle.text = item.title
-            if (item.addr1 == null) {
-                textAddress.text = "주소정보없음"
-            } else {
-                textAddress.text = "${item.addr1} ${item.addr2}".replace(" null", "")
-            }
-            textViewCount.text = NumberFormat.getInstance().format(item.readcount) + " view"
+            binding?.item = item
+//            glide
+//                .load(item.firstimage)
+//                .override(240, 200)
+//                .into(imageThumb)
+//            textTitle.text = item.title
+//            if (item.addr1 == null) {
+//                textAddress.text = "주소정보없음"
+//            } else {
+//                textAddress.text = "${item.addr1} ${item.addr2}".replace(" null", "")
+//            }
+//            textViewCount.text = NumberFormat.getInstance().format(item.readcount) + " view"
+//
+//            itemView.setOnClickListener {
+//                context.startActivity(Intent(context, DetailActivity::class.java).apply {
+//                    putExtra("title", item.title)
+//                    putExtra("contentId", item.contentid)
+//                    putExtra("contentTypeId", item.contenttypeid)
+//                })
+//            }
+        }
+    }
 
-            itemView.setOnClickListener {
-                context.startActivity(Intent(context, DetailActivity::class.java).apply {
-                    putExtra("title", item.title)
-                    putExtra("contentId", item.contentid)
-                    putExtra("contentTypeId", item.contenttypeid)
-                })
+    override fun <T : Any> addItems(list: ArrayList<T>?) {
+        list?.let {
+            listItem.clear()
+            it.forEach { item ->
+                if (item is Item) listItem.add(item)
             }
         }
     }

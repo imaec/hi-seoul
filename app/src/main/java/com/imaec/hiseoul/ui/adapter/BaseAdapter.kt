@@ -4,6 +4,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.imaec.hiseoul.model.Item
 
 abstract class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -11,5 +12,9 @@ abstract class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     protected fun <T : ViewDataBinding?> getBinding(view: View): T? {
         return DataBindingUtil.bind<T>(view)
+    }
+
+    open fun <T : Any> addItems(list: ArrayList<T>?) {
+
     }
 }

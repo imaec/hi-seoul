@@ -11,6 +11,8 @@ import com.imaec.hiseoul.viewmodel.CommonViewModelFactory
 
 abstract class BaseFragment : Fragment() {
 
+    protected val TAG = this::class.java.name
+
     protected fun <T : ViewDataBinding?> getView(inflater: LayoutInflater, resId: Int, container: ViewGroup?): T {
         return DataBindingUtil.inflate<T>(inflater, resId, container, false)
     }

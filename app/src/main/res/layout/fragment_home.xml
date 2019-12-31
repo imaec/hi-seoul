@@ -64,8 +64,11 @@
                     android:id="@+id/recycler_category"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:orientation="horizontal"
                     android:background="@android:color/white"
-                    android:nestedScrollingEnabled="false"/>
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:adapter="@{viewModel.categoryAdapter}"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -116,12 +119,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/white"
-                    android:nestedScrollingEnabled="false"/>
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:adapter="@{viewModel.homeAdapter}"
+                    app:item="@{viewModel.listTour}"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
         <include
-            layout="@layout/content_alpha_bg"/>
+            layout="@layout/content_alpha_bg"
+            android:id="@+id/view_alpha_bg"/>
 
         <LinearLayout
             android:id="@+id/linear_bottom_sheet"

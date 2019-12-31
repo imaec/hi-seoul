@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.imaec.hiseoul.ACTION_GET_LIST
 import com.imaec.hiseoul.R
 import com.imaec.hiseoul.databinding.ActivitySplashBinding
 import com.imaec.hiseoul.viewmodel.CommonViewModelFactory
@@ -30,34 +31,32 @@ class SplashActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
-//        if (receiver != null) return
-//
-//        val theFilter = IntentFilter()
-//        theFilter.addAction("ACTION_GET_LIST")
-//        receiver = object : BroadcastReceiver() {
-//            override fun onReceive(context: Context, intent: Intent) {
-//                if (intent.action == "ACTION_GET_LIST") {
-//                    finish()
-//                }
-//            }
-//        }
-//
-//        registerReceiver(receiver, theFilter)
+        if (receiver != null) return
+
+        val theFilter = IntentFilter().apply {
+            addAction(ACTION_GET_LIST)
+        }
+        receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == ACTION_GET_LIST) {
+                    finish()
+                }
+            }
+        }
+        registerReceiver(receiver, theFilter)
     }
 
     override fun onPause() {
         super.onPause()
         viewModel.onPause()
 
-//        if(receiver != null) {
-//            unregisterReceiver(receiver)
-//            receiver = null
-//        }
+        if(receiver != null) {
+            unregisterReceiver(receiver)
+            receiver = null
+        }
     }
 
     override fun onBackPressed() {
-    }
 
-    private fun init() {
     }
 }

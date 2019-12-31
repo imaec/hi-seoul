@@ -1,12 +1,14 @@
 package com.imaec.hiseoul.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.imaec.hiseoul.R
 import com.imaec.hiseoul.hide
 import com.imaec.hiseoul.ui.view.activity.MainActivity
+import com.imaec.hiseoul.ui.view.activity.SplashActivity
 import com.imaec.hiseoul.ui.view.fragment.HomeFragment2
 import com.imaec.hiseoul.ui.view.fragment.MapFragment
 import com.imaec.hiseoul.ui.view.fragment.MyFragment
@@ -21,7 +23,7 @@ class MainViewModel(context: Context) : BaseViewModel(context) {
     private lateinit var fragmentSetting: SettingFragment
 
     override fun onCreate() {
-        // startActivity(Intent(context, SplashActivity::class.java))
+        startActivity(Intent(context, SplashActivity::class.java))
 
         fragmentManager = (context as MainActivity).supportFragmentManager
         fragmentHome = HomeFragment2()

@@ -1,21 +1,16 @@
-package com.imaec.hiseoul
+package com.imaec.hiseoul.util
 
 import android.view.View
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 
-class ParallaxPageTransformer : ViewPager.PageTransformer {
+class ParallaxPageTransformer : ViewPager2.PageTransformer {
 
     private var mViewsToParallax = ArrayList<ParallaxTransformInformation>()
 
     constructor()
 
     constructor(viewsToParallax: ArrayList<ParallaxTransformInformation>) {
-        mViewsToParallax = viewsToParallax
-    }
-
-    fun addViewToParallax(viewInfo: ParallaxTransformInformation): ParallaxPageTransformer {
-        mViewsToParallax.add(viewInfo)
-        return this
+        this.mViewsToParallax = viewsToParallax
     }
 
     override fun transformPage(page: View, position: Float) {
@@ -46,6 +41,11 @@ class ParallaxPageTransformer : ViewPager.PageTransformer {
                     -position * (pageWidth / information.parallaxExitEffect)
             }
         }
+    }
+
+    fun addViewToParallax(viewInfo: ParallaxTransformInformation): ParallaxPageTransformer {
+        mViewsToParallax.add(viewInfo)
+        return this
     }
 
     class ParallaxTransformInformation(resource: Int, parallaxEnterEffect: Float, parallaxExitEffect: Float) {

@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.RequestManager
-import com.imaec.hiseoul.CategoryClickCallback
 import com.imaec.hiseoul.R
+import com.imaec.hiseoul.databinding.ItemCategoryBinding
 import com.imaec.hiseoul.model.CategoryData
 import kotlinx.android.synthetic.main.item_category.view.*
 
-class CategoryAdapter(var glide: RequestManager, var clickCallback: CategoryClickCallback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CategoryAdapter(var callback: (Int) -> Unit) : BaseAdapter() {
 
     private val listItem = ArrayList<CategoryData>()
 
@@ -29,19 +28,24 @@ class CategoryAdapter(var glide: RequestManager, var clickCallback: CategoryClic
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val imageIcon by lazy { itemView.imageItemCategory }
-        private val textCategory by lazy { itemView.textItemCategory }
+        private val binding = getBinding<ItemCategoryBinding>(itemView)
 
         fun onBind(item: CategoryData, position: Int) {
-            textCategory.text = item.category
+            binding?.item = item
 
             itemView.setOnClickListener {
-                clickCallback.onClick(position)
+                callback(position)
             }
         }
     }
 
-    fun addItem(item: CategoryData) {
-        listItem.add(item)
+    override fun <T : Any> addItems(list: ArrayList<T>?) {
+        list?.let {
+            listItem.clear()
+            list.forEach { item ->
+                if (item is CategoryData) listItem.add(item)
+            }
+            notifyDataSetChanged()
+        }
     }
 }

@@ -36,12 +36,11 @@ class ViewPagerAdapter : BaseAdapter() {
         }
     }
 
-    fun addItems(list: ArrayList<Item>?) {
+    override fun <T : Any> addItems(list: ArrayList<T>?) {
         list?.let {
             listItem.clear()
             it.forEach { item ->
-                listItem.add(item)
-                Log.d("$TAG :::: ", item.title)
+                if (item is Item) listItem.add(item)
             }
         }
     }

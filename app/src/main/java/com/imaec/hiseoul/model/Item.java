@@ -1,5 +1,7 @@
 package com.imaec.hiseoul.model;
 
+import android.util.Log;
+
 import org.simpleframework.xml.Element;
 
 public class Item {
@@ -173,6 +175,7 @@ public class Item {
     }
 
     public int getReadcount() {
+        Log.d("readCount :::: ", readcount + "");
         return readcount;
     }
 
