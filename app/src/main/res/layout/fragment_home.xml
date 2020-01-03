@@ -91,7 +91,7 @@
                         android:id="@+id/text_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="관광지"
+                        android:text="@{viewModel.category}"
                         android:textSize="16sp"
                         android:textColor="#333333"/>
 
@@ -220,5 +220,16 @@
                     android:textColor="@color/colorFilterOff"/>
             </LinearLayout>
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_up"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:fabSize="mini"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

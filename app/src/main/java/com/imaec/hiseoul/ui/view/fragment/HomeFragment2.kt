@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.imaec.hiseoul.R
 import com.imaec.hiseoul.databinding.FragmentHomeBinding
+import com.imaec.hiseoul.ui.view.callback.HomeOnScrollChangedListener
 import com.imaec.hiseoul.util.HomeItemDecoration
 import com.imaec.hiseoul.util.ParallaxPageTransformer
 import com.imaec.hiseoul.viewmodel.HomeViewModel
@@ -21,6 +23,7 @@ class HomeFragment2 : BaseFragment(), View.OnClickListener {
     private lateinit var viewModel: HomeViewModel
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private var filterTempIndex = 0
+    var isBottomSheetHidden = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +101,10 @@ class HomeFragment2 : BaseFragment(), View.OnClickListener {
                 filterTempIndex = 2
                 setTextColor(binding.textBottomSheetName, binding.textBottomSheetPopular, binding.textBottomSheetNew)
             }
+            // ScrollView 위로 올리기
+            R.id.fab -> {
+                binding.scrollView?.smoothScrollTo(0, 0)
+            }
         }
     }
 
@@ -114,9 +121,23 @@ class HomeFragment2 : BaseFragment(), View.OnClickListener {
         // 필터 설정
         bottomSheetBehavior = BottomSheetBehavior.from(binding.linearBottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        // Fab Hide
+        binding.fab.hide()
     }
 
     private fun initListener() {
+        // 전체 NestedScrollView 스크롤 리스너
+        binding.scrollView.setOnScrollChangeListener(object : HomeOnScrollChangedListener() {
+            override fun onScrollHalfUp() {
+                if (binding.fab.isOrWillBeShown) binding.fab.hide()
+//                if (binding.fab.visibility == View.VISIBLE) binding.fab.visibility = View.GONE
+            }
+
+            override fun onScrollHalfDown() {
+                if (binding.fab.isOrWillBeHidden) binding.fab.show()
+//                if (binding.fab.visibility == View.GONE) binding.fab.visibility = View.VISIBLE
+            }
+        })
         // 상단 ViewPager 페이지 전환 콜백
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -134,8 +155,10 @@ class HomeFragment2 : BaseFragment(), View.OnClickListener {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if ((binding.viewAlphaBg.visibility == View.GONE && newState == BottomSheetBehavior.STATE_SETTLING) || newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     binding.viewAlphaBg.visibility = View.VISIBLE
+                    isBottomSheetHidden = false
                 } else if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     binding.viewAlphaBg.visibility = View.GONE
+                    isBottomSheetHidden = true
                 }
             }
         })
@@ -147,6 +170,7 @@ class HomeFragment2 : BaseFragment(), View.OnClickListener {
         binding.textBottomSheetPopular.setOnClickListener(this)
         binding.textBottomSheetNew.setOnClickListener(this)
         binding.textBottomSheetName.setOnClickListener(this)
+        binding.fab.setOnClickListener(this)
     }
 
     /**
@@ -180,5 +204,10 @@ class HomeFragment2 : BaseFragment(), View.OnClickListener {
         textView1.setBackgroundResource(R.drawable.bg_filter_on)
         textView2.setBackgroundResource(R.drawable.bg_filter_off)
         textView3.setBackgroundResource(R.drawable.bg_filter_off)
+    }
+
+    fun setBottomSheetHidden() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        isBottomSheetHidden = true
     }
 }

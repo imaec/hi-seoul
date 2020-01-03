@@ -27,6 +27,10 @@ class MainActivity : BaseActivity(),
         initLayout()
     }
 
+    override fun onBackPressed() {
+        viewModel.onBackPressed()
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return viewModel.onNavigationItemSelected(item.itemId, binding.frameLayout.id)
     }

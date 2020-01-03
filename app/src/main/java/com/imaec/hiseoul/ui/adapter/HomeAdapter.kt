@@ -55,11 +55,7 @@ class HomeAdapter(callback: (Int) -> Unit) : BaseAdapter(callback) {
         }
     }
 
-    fun addItem(item: Item) {
-        listItem.add(item)
-    }
-
-    fun clearItem() {
-        listItem.clear()
+    override fun <T : Any> getItem(position: Int, type: Class<T>): T? {
+        return type.cast(listItem[position])
     }
 }

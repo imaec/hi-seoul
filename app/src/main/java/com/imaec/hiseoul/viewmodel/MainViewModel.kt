@@ -32,6 +32,14 @@ class MainViewModel(context: Context) : BaseViewModel(context) {
         fragmentSetting = SettingFragment()
     }
 
+    override fun onBackPressed() {
+        if (fragmentHome.isBottomSheetHidden) {
+            finish()
+        } else {
+            fragmentHome.setBottomSheetHidden()
+        }
+    }
+
     fun initBottomNavigation(containerId: Int) {
         replaceFragment(fragmentHome, containerId)
     }

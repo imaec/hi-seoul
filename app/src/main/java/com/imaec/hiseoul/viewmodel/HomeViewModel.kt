@@ -32,6 +32,7 @@ class HomeViewModel(context: Context) : BaseViewModel(context) {
         CategoryData("음식점", 39)
     )
 
+    var category: MutableLiveData<String> = MutableLiveData("관광지")
     var listImage: MutableLiveData<ArrayList<Item>> = MutableLiveData()
     var listTour: MutableLiveData<ArrayList<Item>> = MutableLiveData()
     var filterIndex = 0
@@ -47,6 +48,7 @@ class HomeViewModel(context: Context) : BaseViewModel(context) {
     var categoryAdapter = CategoryAdapter {
         if (it == categoryIndex) return@CategoryAdapter
 
+        category.value = listCategory[it].category
         categoryIndex = it
         loadImage()
         loadTour(filterIndex)

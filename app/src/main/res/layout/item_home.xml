@@ -71,7 +71,6 @@
                         android:id="@+id/text_view_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
                         android:textSize="10sp"
                         android:textColor="@color/colorPrimaryDark"
                         app:viewCount="@{item.readcount}"/>

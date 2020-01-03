@@ -25,4 +25,8 @@ abstract class BaseAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     open fun <T : Any> addItems(list: ArrayList<T>?) {
 
     }
+
+    open fun <T : Any> getItem(position: Int, type: Class<T>): T? {
+        return null
+    }
 }
