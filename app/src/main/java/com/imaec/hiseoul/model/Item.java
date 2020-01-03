@@ -175,7 +175,6 @@ public class Item {
     }
 
     public int getReadcount() {
-        Log.d("readCount :::: ", readcount + "");
         return readcount;
     }
 

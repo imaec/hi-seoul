@@ -52,6 +52,7 @@ class CircleAnimIndicator : LinearLayout {
         mDefaultCircle = defaultCircle
         mSelectCircle = selectCircle
 
+        imageDot.clear()
         for (i in 0 until count) {
             val imageView = ImageView(mContext).apply {
                 layoutParams = LayoutParams(

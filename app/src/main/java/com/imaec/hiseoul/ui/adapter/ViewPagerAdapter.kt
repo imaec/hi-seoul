@@ -1,16 +1,14 @@
 package com.imaec.hiseoul.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.imaec.hiseoul.R
 import com.imaec.hiseoul.databinding.ItemImageBinding
 import com.imaec.hiseoul.model.Item
 
-class ViewPagerAdapter : BaseAdapter() {
+class ViewPagerAdapter(callback: (Int) -> Unit) : BaseAdapter(callback) {
 
     private val listItem = ArrayList<Item>()
 
@@ -23,7 +21,7 @@ class ViewPagerAdapter : BaseAdapter() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ItemViewHolder) {
-            holder.onBind(listItem[position])
+            holder.onBind(listItem[position], position)
         }
     }
 
@@ -31,8 +29,11 @@ class ViewPagerAdapter : BaseAdapter() {
 
         private val binding = getBinding<ItemImageBinding>(itemView)
 
-        fun onBind(item: Item) {
+        fun onBind(item: Item, position: Int) {
             binding?.item = item
+            itemView.setOnClickListener {
+                callback(position)
+            }
         }
     }
 

@@ -57,9 +57,10 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
-                    android:text="@{item.addr1 + item.addr2}"
                     android:textSize="11sp"
-                    android:textColor="#999999"/>
+                    android:textColor="#999999"
+                    app:addr1="@{item.addr1}"
+                    app:addr2="@{item.addr2}"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -71,9 +72,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                        android:text=""
                         android:textSize="10sp"
-                        android:textColor="@color/colorPrimaryDark"/>
+                        android:textColor="@color/colorPrimaryDark"
+                        app:viewCount="@{item.readcount}"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

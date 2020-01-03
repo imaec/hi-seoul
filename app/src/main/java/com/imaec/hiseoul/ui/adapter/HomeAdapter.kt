@@ -1,22 +1,15 @@
 package com.imaec.hiseoul.ui.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.RequestManager
 import com.imaec.hiseoul.R
 import com.imaec.hiseoul.databinding.ItemHomeBinding
-import com.imaec.hiseoul.ui.view.activity.DetailActivity
 import com.imaec.hiseoul.model.Item
-import kotlinx.android.synthetic.main.item_home.view.*
-import java.text.NumberFormat
 
-class HomeAdapter : BaseAdapter() {
+class HomeAdapter(callback: (Int) -> Unit) : BaseAdapter(callback) {
 
     private val listItem = ArrayList<Item>()
 
@@ -29,7 +22,7 @@ class HomeAdapter : BaseAdapter() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ItemViewHolder) {
-            holder.onBind(listItem[position])
+            holder.onBind(listItem[position], position)
         }
     }
 
@@ -38,20 +31,11 @@ class HomeAdapter : BaseAdapter() {
         private val binding = getBinding<ItemHomeBinding>(itemView)
 
         @SuppressLint("SetTextI18n")
-        fun onBind(item: Item) {
+        fun onBind(item: Item, position: Int) {
             binding?.item = item
-//            glide
-//                .load(item.firstimage)
-//                .override(240, 200)
-//                .into(imageThumb)
-//            textTitle.text = item.title
-//            if (item.addr1 == null) {
-//                textAddress.text = "주소정보없음"
-//            } else {
-//                textAddress.text = "${item.addr1} ${item.addr2}".replace(" null", "")
-//            }
-//            textViewCount.text = NumberFormat.getInstance().format(item.readcount) + " view"
-//
+            itemView.setOnClickListener {
+                callback(position)
+            }
 //            itemView.setOnClickListener {
 //                context.startActivity(Intent(context, DetailActivity::class.java).apply {
 //                    putExtra("title", item.title)

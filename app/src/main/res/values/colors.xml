@@ -6,6 +6,7 @@
 
     <color name="transparent">#00FFFFFF</color>
     <color name="colorBg">#EEEEEE</color>
+    <color name="colorFilterOff">#BBBBBB</color>
     <color name="colorLine">#CCCCCC</color>
     <color name="colorAlphaBg">#55000000</color>
 </resources>

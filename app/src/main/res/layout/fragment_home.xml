@@ -207,7 +207,7 @@
                     android:background="@drawable/bg_filter_off"
                     android:text="최신"
                     android:textSize="18sp"
-                    android:textColor="#999999"/>
+                    android:textColor="@color/colorFilterOff"/>
 
                 <TextView
                     android:id="@+id/text_bottom_sheet_name"
@@ -217,7 +217,7 @@
                     android:background="@drawable/bg_filter_off"
                     android:text="제목"
                     android:textSize="18sp"
-                    android:textColor="#999999"/>
+                    android:textColor="@color/colorFilterOff"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

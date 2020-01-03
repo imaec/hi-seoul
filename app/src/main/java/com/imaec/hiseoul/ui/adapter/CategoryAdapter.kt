@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.imaec.hiseoul.R
 import com.imaec.hiseoul.databinding.ItemCategoryBinding
 import com.imaec.hiseoul.model.CategoryData
-import kotlinx.android.synthetic.main.item_category.view.*
 
-class CategoryAdapter(var callback: (Int) -> Unit) : BaseAdapter() {
+class CategoryAdapter(callback: (Int) -> Unit) : BaseAdapter(callback) {
 
     private val listItem = ArrayList<CategoryData>()
 

@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 @Suppress("UNCHECKED_CAST")
 class CommonViewModelFactory(var context: Context) : ViewModelProvider.Factory {
 
+    /**
+     * ViewModel을 생성
+     */
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {

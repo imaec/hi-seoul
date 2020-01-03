@@ -20,18 +20,8 @@ class HomeViewModel(context: Context) : BaseViewModel(context) {
 
     private lateinit var service: HiSeoulService
     private var completedCount = 0
-    private var onClickCategory: (Int) -> Unit = {
-        Log.d("$TAG :::: ", listCategory[it].category)
-    }
-
-    var viewPagerAdapter: ViewPagerAdapter = ViewPagerAdapter()
-    var homeAdapter: HomeAdapter = HomeAdapter()
-    var categoryAdapter: CategoryAdapter = CategoryAdapter(onClickCategory)
-    var listImage: MutableLiveData<ArrayList<Item>> = MutableLiveData()
-    var listTour: MutableLiveData<ArrayList<Item>> = MutableLiveData()
-    var index = 0
-    var arrange = "P"
-    val listCategory = arrayListOf(
+    private val listFilter = arrayOf("P", "R", "O")
+    private val listCategory = arrayListOf(
         CategoryData("관광지", 12),
         CategoryData("문화시설", 14),
         CategoryData("행사", 15),
@@ -42,19 +32,49 @@ class HomeViewModel(context: Context) : BaseViewModel(context) {
         CategoryData("음식점", 39)
     )
 
+    var listImage: MutableLiveData<ArrayList<Item>> = MutableLiveData()
+    var listTour: MutableLiveData<ArrayList<Item>> = MutableLiveData()
+    var filterIndex = 0
+    var categoryIndex = 0
+
+    // 상단 ViewPager Adapter { Item Click }
+    var viewPagerAdapter = ViewPagerAdapter {
+        listImage.value?.get(it)?.let { item ->
+            Log.d("$TAG :::: ", "${item.title}, ${item.contentid}, ${item.contenttypeid}")
+        }
+    }
+    // 둘러보기 Adapter { Item Click }
+    var categoryAdapter = CategoryAdapter {
+        if (it == categoryIndex) return@CategoryAdapter
+
+        categoryIndex = it
+        loadImage()
+        loadTour(filterIndex)
+    }
+    // 홈 리스트 Adapter, { Item Click }
+    var homeAdapter = HomeAdapter {
+        listTour.value?.get(it)?.let { item ->
+            Log.d("$TAG :::: ", "${item.title}, ${item.contentid}, ${item.contenttypeid}")
+        }
+    }
+
     override fun onCreate() {
         service = HiSeoulService.instance
 
         loadImage()
-        loadTour()
+        loadTour(0)
         categoryAdapter.addItems(listCategory)
     }
 
+    /**
+     * 상단 ViewPager Image 로드
+     * @param filterIndex 인기, 최신, 제목 필터 / 기본 값 '최신'으로 변경되지 않음
+     */
     @SuppressLint("CheckResult")
-    private fun loadImage() {
+    fun loadImage(filterIndex: Int = 1) {
         val callImage = service.callGetList(
-            listCategory[index].contenttypeid,
-            "R",
+            listCategory[categoryIndex].contenttypeid,
+            listFilter[filterIndex],
             8,
             1
         )
@@ -72,10 +92,14 @@ class HomeViewModel(context: Context) : BaseViewModel(context) {
             .add()
     }
 
-    private fun loadTour() {
+    /**
+     * 관광지, 문화시설, 행사 등 홈 화면에 보여질 리스트 로드
+     * @param filterIndex 인기, 최신, 제목 필터
+     */
+    fun loadTour(filterIndex: Int) {
         val callTour = service.callGetList(
-            listCategory[index].contenttypeid,
-            arrange,
+            listCategory[categoryIndex].contenttypeid,
+            listFilter[filterIndex],
             60,
             1
         )
